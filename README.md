@@ -50,6 +50,7 @@ uv run python run_prefect_flow.py --reset-state
 
 # Access UI at http://127.0.0.1:4200
 ```
+<img width="2562" height="1352" alt="image" src="https://github.com/user-attachments/assets/81c72031-f948-455c-8dc2-d7b2483ce747" />
 
 ### 1.5 Access DuckDB UI
 
@@ -67,6 +68,8 @@ Then launch the DuckDB UI:
 ```bash
 duckdb -ui
 ```
+We need to add in our database path as follow:
+<img width="2566" height="1352" alt="image" src="https://github.com/user-attachments/assets/0167dae6-0e77-42b9-ae4f-09bfe2490b5c" />
 
 Additional docs: [DuckDB UI Documentation](https://duckdb.org/docs/api/cli/ui)
 
@@ -88,6 +91,9 @@ uv run visivo serve --port 3000
 Then open your browser to:
 
 * **Dashboard URL**: <http://localhost:8080>
+
+<img width="2390" height="601" alt="image" src="https://github.com/user-attachments/assets/e87eb339-7514-467a-a01a-860582b6bab4" />
+
 
 **Available Dashboards**:
 

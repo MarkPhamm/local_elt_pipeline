@@ -14,7 +14,7 @@ The ingestion pipeline extracts consumer complaint data from the CFPB API and lo
 - Error handling and retry logic
 - Prefect orchestration with monitoring
 
-## 2.Architecture
+## 2. Architecture
 
 ### 2.1 Components
 

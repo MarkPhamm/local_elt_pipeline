@@ -42,7 +42,7 @@ DuckDB is an in-process SQL OLAP (Online Analytical Processing) database managem
 - Real-time operational databases
 - Applications requiring distributed architecture
 
-## 3.Architecture
+## 3. Architecture
 
 ### 3.1 Storage Architecture
 

@@ -60,8 +60,8 @@ class TestTableStructure:
         """Test that the table exists in the database."""
         result = db_connection.execute(
             f"""
-            SELECT COUNT(*) 
-            FROM information_schema.tables 
+            SELECT COUNT(*)
+            FROM information_schema.tables
             WHERE table_schema = '{schema_name}' AND table_name = '{table_name}'
             """
         ).fetchone()[0]
@@ -72,8 +72,8 @@ class TestTableStructure:
         """Test that the table has columns."""
         columns = db_connection.execute(
             f"""
-            SELECT column_name, data_type 
-            FROM information_schema.columns 
+            SELECT column_name, data_type
+            FROM information_schema.columns
             WHERE table_schema = '{schema_name}' AND table_name = '{table_name}'
             ORDER BY ordinal_position
             """
@@ -86,8 +86,8 @@ class TestTableStructure:
         """Test that the table has required key columns."""
         columns = db_connection.execute(
             f"""
-            SELECT column_name 
-            FROM information_schema.columns 
+            SELECT column_name
+            FROM information_schema.columns
             WHERE table_schema = '{schema_name}' AND table_name = '{table_name}'
             """
         ).fetchall()
@@ -131,8 +131,8 @@ class TestDataContent:
         """Test that sample records have the required fields populated."""
         samples = db_connection.execute(
             f"""
-            SELECT complaint_id, date_received, company, product 
-            FROM {schema_name}.{table_name} 
+            SELECT complaint_id, date_received, company, product
+            FROM {schema_name}.{table_name}
             WHERE complaint_id IS NOT NULL
             LIMIT 5
             """
@@ -154,7 +154,7 @@ class TestDataContent:
         # Check that date_received can be parsed as a date
         result = db_connection.execute(
             f"""
-            SELECT COUNT(*) 
+            SELECT COUNT(*)
             FROM {schema_name}.{table_name}
             WHERE date_received IS NOT NULL
             """
@@ -179,10 +179,10 @@ class TestDataQuality:
         # Count records where all key fields are null
         null_count = db_connection.execute(
             f"""
-            SELECT COUNT(*) 
+            SELECT COUNT(*)
             FROM {schema_name}.{table_name}
-            WHERE complaint_id IS NULL 
-            AND date_received IS NULL 
+            WHERE complaint_id IS NULL
+            AND date_received IS NULL
             AND company IS NULL
             """
         ).fetchone()[0]

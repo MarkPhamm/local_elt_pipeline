@@ -11,6 +11,9 @@ dependencies = [
     "dbt-duckdb>=1.7.0",
     "visivo>=0.10.0",
     "dbt-colibri>=0.2.7",
+    "ipykernel>=7.1.0",
+    "pandas>=2.3.3",
+    "seaborn>=0.13.2",
 ]
 
 [build-system]

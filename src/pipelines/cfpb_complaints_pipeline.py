@@ -71,7 +71,9 @@ def extract_complaints(
             if "complaint_id" not in complaint or not complaint.get("complaint_id"):
                 # Try to get ID from various possible fields (API returns _source with _id)
                 complaint_id_field = (
-                    complaint.get("_id") or complaint.get("id") or complaint.get("complaint_id")
+                    complaint.get("_id")
+                    or complaint.get("id")
+                    or complaint.get("complaint_id")
                 )
 
                 # If we have an ID, use it; otherwise construct from date + hash

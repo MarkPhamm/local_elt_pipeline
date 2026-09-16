@@ -1,0 +1,9 @@
+# Engine knobs for dbt Charts. Presentation defaults live in charts/meta.yml.
+server:
+  port: 8080
+
+sources:
+  duckdb_cfpb:
+    type: dbt_profile
+    profile: duckdb_dbt
+    target: dev

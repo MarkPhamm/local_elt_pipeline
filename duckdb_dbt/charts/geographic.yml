@@ -1,0 +1,83 @@
+title: Geographic Analysis
+
+text: |
+  Complaint distribution across US states from `dim_states`. The map joins
+  two-letter state codes to FIPS identifiers expected by the `us-states`
+  geography source.
+
+queries:
+  state_distribution:
+    sql: |
+      with state_fips(state, fips) as (
+        values
+          ('AL', '01'), ('AK', '02'), ('AZ', '04'), ('AR', '05'),
+          ('CA', '06'), ('CO', '08'), ('CT', '09'), ('DE', '10'),
+          ('DC', '11'), ('FL', '12'), ('GA', '13'), ('HI', '15'),
+          ('ID', '16'), ('IL', '17'), ('IN', '18'), ('IA', '19'),
+          ('KS', '20'), ('KY', '21'), ('LA', '22'), ('ME', '23'),
+          ('MD', '24'), ('MA', '25'), ('MI', '26'), ('MN', '27'),
+          ('MS', '28'), ('MO', '29'), ('MT', '30'), ('NE', '31'),
+          ('NV', '32'), ('NH', '33'), ('NJ', '34'), ('NM', '35'),
+          ('NY', '36'), ('NC', '37'), ('ND', '38'), ('OH', '39'),
+          ('OK', '40'), ('OR', '41'), ('PA', '42'), ('RI', '44'),
+          ('SC', '45'), ('SD', '46'), ('TN', '47'), ('TX', '48'),
+          ('UT', '49'), ('VT', '50'), ('VA', '51'), ('WA', '53'),
+          ('WV', '54'), ('WI', '55'), ('WY', '56')
+      )
+      select
+        s.state,
+        ltrim(f.fips, '0') as state_fips,
+        s.total_complaints,
+        s.pct_disputed,
+        s.pct_timely,
+        s.most_common_product,
+        s.most_common_issue
+      from {{ ref('dim_states') }} as s
+      inner join state_fips as f
+        on s.state = f.state
+      order by s.total_complaints desc
+
+  top_states:
+    sql: |
+      select
+        state,
+        total_complaints,
+        pct_disputed,
+        pct_timely,
+        most_common_product,
+        most_common_issue
+      from {{ ref('dim_states') }}
+      order by total_complaints desc
+      limit 25
+
+charts:
+  state_heatmap:
+    query: state_distribution
+    type: map
+    title: Complaint volume by state
+    geo:
+      source: us-states
+    lookup: state_fips
+    value: total_complaints
+    projection:
+      type: albersUsa
+
+  top_states_bar:
+    query: top_states
+    type: bar
+    title: Top 25 states by complaint volume
+    x: state
+    y: total_complaints
+    style:
+      orientation: horizontal
+
+  state_table:
+    query: top_states
+    type: table
+    title: State statistics
+
+rows:
+  - state_heatmap
+  - cols:
+      - top_states_bar
+      - state_table

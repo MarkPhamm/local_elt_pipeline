@@ -1,0 +1,6 @@
+source: duckdb_cfpb
+theme: clarity
+style:
+  frame:
+    max_width: 1440
+    card_padding: 20

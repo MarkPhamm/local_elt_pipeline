@@ -36,3 +36,8 @@ jobs:
       run: |
         uv run ruff format --check .
 
+    - name: Validate dbt Charts
+      run: |
+        uv run dbt parse --project-dir duckdb_dbt --profiles-dir duckdb_dbt
+        uv run dct validate --project-dir duckdb_dbt
+

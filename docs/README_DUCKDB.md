@@ -117,7 +117,7 @@ DuckDB is an in-process SQL OLAP (Online Analytical Processing) database managem
        ├─> DuckDB CLI
        ├─> DuckDB UI (Web Interface)
        ├─> Python (duckdb library)
-       └─> BI Tools (Visivo, Metabase, etc.)
+       └─> BI Tools (dbt Charts, Streamlit, etc.)
 
 ```
 

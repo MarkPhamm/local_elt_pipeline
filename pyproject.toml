@@ -1,7 +1,7 @@
 [project]
 name = "local-elt-pipeline"
 version = "0.1.0"
-description = "Local-first ELT pipeline for CFPB consumer complaints: extract with dlt, transform with dbt, analyze with DuckDB, orchestrate with Prefect, and visualize with Visivo—all running locally with zero cloud dependencies"
+description = "Local-first ELT pipeline for CFPB consumer complaints: extract with dlt, transform with dbt, analyze with DuckDB, orchestrate with Prefect, and visualize with dbt Charts—all running locally with zero cloud dependencies"
 requires-python = ">=3.10,<3.13"
 dependencies = [
     "dlt[duckdb]>=1.17.0",
@@ -9,7 +9,7 @@ dependencies = [
     "requests>=2.31.0",
     "urllib3>=2.0.0",
     "dbt-duckdb>=1.7.0",
-    "visivo>=0.10.0",
+    "dbt-charts>=0.8.0",
     "dbt-colibri>=0.2.7",
     "ipykernel>=7.1.0",
     "pandas>=2.3.3",

@@ -8,7 +8,7 @@ A local-first Data Wareouse pipeline that extracts CFPB consumer complaint data,
 * **Transformation & Documentation**: [dbt core](docs/README_DBT.md) & [dbt-colibri](docs/README_DBT.md)
 * **OLAP Database**: [DuckDB](docs/README_DUCKDB.md)
 * **Orchestration**: [Prefect](docs/README_PREFECT.md)
-* **BI Tool**: [Visivo](docs/README_VISIVO.md)
+* **BI Tool**: [dbt Charts](docs/README_DBT_CHARTS.md)
 
 <img src="https://github.com/user-attachments/assets/1b4e8d7b-0527-4fdc-b104-562cf0c3efa6" alt="Architecture Diagram" style="width: 100%; height: auto;" />
 
@@ -104,38 +104,33 @@ We need to add in our database path as follow:
 
 Additional docs: [DuckDB UI Documentation](https://duckdb.org/docs/api/cli/ui)
 
-### 1.7 Access Visivo Dashboards
+### 1.7 Access dbt Charts Dashboards
 
-Start the Visivo web server to view interactive dashboards:
+Boards live next to the dbt models they query. Parse (or run) dbt so `ref()` can resolve, then serve:
 
 ```bash
-# Navigate to visivo directory
-cd visivo
-
-# Start web server (runs on http://localhost:8080 by default)
-uv run visivo serve
-
-# Or use a custom port
-uv run visivo serve --port 3000
+uv run dbt parse --project-dir duckdb_dbt --profiles-dir duckdb_dbt
+uv run dct serve --project-dir duckdb_dbt
 ```
 
 Then open your browser to:
 
 * **Dashboard URL**: <http://localhost:8080>
 
-<img width="2390" height="601" alt="image" src="https://github.com/user-attachments/assets/e87eb339-7514-467a-a01a-860582b6bab4" />
+**Available boards**:
 
-**Available Dashboards**:
-
-* **Executive Dashboard**: High-level overview of complaint trends and company performance
-* **Geographic Dashboard**: State-by-state complaint distribution and analysis
+* **Overview**: Links to the analysis boards
+* **Executive**: KPIs, monthly trends, product mix, and top companies
+* **Geographic**: US state map and ranked state statistics
+* **Product**: Product mix, response time, and sub-product detail
+* **Response**: Timeliness trends, company scatter, and response types
 
 **Note**: Before viewing dashboards, ensure:
 
 1. Data pipeline has been run (`uv run python run_prefect_flow.py`)
 2. dbt models have been built (`cd duckdb_dbt && dbt run`)
 
-Additional docs: [Visivo Documentation](docs/README_VISIVO.MD)
+Additional docs: [dbt Charts Documentation](docs/README_DBT_CHARTS.md)
 
 ### 1.8 Generate dbt Lineage Reports with Colibri
 

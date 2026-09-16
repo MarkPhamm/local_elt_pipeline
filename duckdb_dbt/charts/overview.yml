@@ -1,0 +1,13 @@
+title: CFPB Complaints Analytics
+
+text: |
+  Code-first dashboards over the dbt marts layer. Run `dbt parse` (or `dbt run`)
+  in `duckdb_dbt/` so `ref()` can resolve, then open a board:
+
+  - [Executive](/executive/) — volume, dispute rate, and top companies
+  - [Geographic](/geographic/) — complaint distribution by US state
+  - [Product](/product/) — product mix, response time, and issue patterns
+  - [Response](/response/) — timeliness, dispute rate, and response types
+
+  Queries read `{{ ref() }}` against the same DuckDB warehouse dbt builds.
+  Rebuild marts after a pipeline run, then refresh the board.

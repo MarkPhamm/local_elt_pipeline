@@ -1,0 +1,131 @@
+title: CFPB Complaints Executive Dashboard
+
+text: |
+  High-level complaint volume, dispute rate, and company performance from
+  `fct_complaints`, `agg_complaints_by_month`, `dim_companies`, and `dim_products`.
+
+queries:
+  kpi_summary:
+    sql: |
+      select
+        count(*) as total_complaints,
+        count(distinct company) as unique_companies,
+        round(100.0 * count_if(is_disputed) / count(*), 2) as pct_disputed,
+        round(avg(days_to_response), 2) as avg_days_to_response
+      from {{ ref('fct_complaints') }}
+
+  monthly_trends:
+    sql: |
+      select
+        complaint_month_date,
+        total_complaints,
+        pct_disputed
+      from {{ ref('agg_complaints_by_month') }}
+      order by complaint_month_date
+
+  company_metrics:
+    sql: |
+      select
+        company,
+        total_complaints,
+        pct_disputed,
+        pct_timely,
+        avg_days_to_response
+      from {{ ref('dim_companies') }}
+      order by total_complaints desc
+      limit 20
+
+  product_breakdown:
+    sql: |
+      select
+        product,
+        total_complaints
+      from {{ ref('dim_products') }}
+      where sub_product is null
+      order by total_complaints desc
+
+charts:
+  total_complaints_kpi:
+    query: kpi_summary
+    type: kpi
+    label: Total complaints
+    value: total_complaints
+    style:
+      value:
+        format: integer
+
+  unique_companies_kpi:
+    query: kpi_summary
+    type: kpi
+    label: Companies
+    value: unique_companies
+    style:
+      value:
+        format: integer
+
+  dispute_rate_kpi:
+    query: kpi_summary
+    type: kpi
+    label: Dispute rate (%)
+    value: pct_disputed
+    style:
+      value:
+        format: number
+
+  avg_response_kpi:
+    query: kpi_summary
+    type: kpi
+    label: Avg days to response
+    value: avg_days_to_response
+    style:
+      value:
+        format: number
+
+  monthly_trends_chart:
+    query: monthly_trends
+    type: line
+    title: Monthly complaint trends
+    x: complaint_month_date
+    y: total_complaints
+    x_label: Month
+    y_label: Total complaints
+    layers:
+      - type: line
+        y: pct_disputed
+        label: Dispute rate %
+        axis_y:
+          position: right
+          title: Dispute rate %
+
+  product_distribution:
+    query: product_breakdown
+    type: donut
+    title: Complaints by product
+    theta: total_complaints
+    color: product
+
+  company_performance:
+    query: company_metrics
+    type: bar
+    title: Top 20 companies by complaint volume
+    x: company
+    y: total_complaints
+    style:
+      orientation: horizontal
+
+  company_performance_table:
+    query: company_metrics
+    type: table
+    title: Company performance
+
+rows:
+  - cols:
+      - total_complaints_kpi
+      - unique_companies_kpi
+      - dispute_rate_kpi
+      - avg_response_kpi
+  - cols:
+      - monthly_trends_chart
+      - product_distribution
+  - company_performance
+  - company_performance_table

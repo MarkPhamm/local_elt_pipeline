@@ -1,0 +1,60 @@
+title: Product Analysis
+
+text: |
+  Product and sub-product performance from `dim_products`. Product-level
+  rows have a null `sub_product`; sub-product rows are used for response-time
+  scatter and the detail table.
+
+queries:
+  product_totals:
+    sql: |
+      select
+        product,
+        total_complaints
+      from {{ ref('dim_products') }}
+      where sub_product is null
+      order by total_complaints desc
+
+  product_details:
+    sql: |
+      select
+        product,
+        sub_product,
+        total_complaints,
+        pct_disputed,
+        avg_days_to_response,
+        most_common_issue
+      from {{ ref('dim_products') }}
+      where sub_product is not null
+      order by total_complaints desc
+      limit 30
+
+charts:
+  product_distribution:
+    query: product_totals
+    type: donut
+    title: Complaints by product
+    theta: total_complaints
+    color: product
+
+  response_time_scatter:
+    query: product_details
+    type: scatter
+    title: Complaint volume vs average response time
+    x: total_complaints
+    y: avg_days_to_response
+    color: pct_disputed
+    size: total_complaints
+    x_label: Total complaints
+    y_label: Avg days to response
+
+  product_details_table:
+    query: product_details
+    type: table
+    title: Top 30 product / sub-product combinations
+
+rows:
+  - cols:
+      - product_distribution
+      - response_time_scatter
+  - product_details_table

@@ -26,7 +26,7 @@ The project includes the following GitHub Actions workflows:
 
 ### 2.2 Lint Workflow (`lint.yml`)
 
-**Purpose**: Validates code quality and formatting using Ruff
+**Purpose**: Validates code quality, formatting, and dbt Charts boards
 
 **Triggers**:
 
@@ -35,11 +35,12 @@ The project includes the following GitHub Actions workflows:
 
 **Jobs**:
 
-- `lint`: Runs Python code linting and formatting checks
+- `lint`: Runs Python linting, formatting checks, and dbt Charts validation
 
 **Tools Used**:
 
 - **Ruff**: Fast Python linter and formatter (replaces black, flake8, isort, etc.)
+- **dbt Charts (`dct validate`)**: Schema and `ref()` checks for boards in `duckdb_dbt/charts/`
 
 ## 3. Workflow Details
 
@@ -53,6 +54,7 @@ The lint workflow performs the following steps:
 4. **Install Dependencies**: Installs project dependencies including dev tools
 5. **Run Ruff Check**: Validates code against linting rules
 6. **Run Ruff Format Check**: Ensures code follows formatting standards
+7. **Validate dbt Charts**: Parses the dbt project and validates board YAML with `dct validate`
 
 ### 3.2 Configuration
 
@@ -138,7 +140,7 @@ You can extend the lint workflow to include additional checks:
 
 - name: Run YAML linting
   run: |
-    uv run yamllint visivo/project.visivo.yml
+    uv run dct validate --project-dir duckdb_dbt
 ```
 
 ### 5.2 Adding Tests

@@ -77,3 +77,16 @@ Process SQL models by layers
 
 **Task:** `run_dbt_tests_task()`
 **File:** `src/orchestration/cfpb_flows.py`
+
+---
+
+## 7. Serve dashboards with dbt Charts
+
+After marts are built, boards in `duckdb_dbt/charts/` query them with `ref()`:
+
+```bash
+uv run dbt parse --project-dir duckdb_dbt --profiles-dir duckdb_dbt
+uv run dct serve --project-dir duckdb_dbt
+```
+
+Open <http://localhost:8080>. See [dbt Charts Documentation](README_DBT_CHARTS.md).

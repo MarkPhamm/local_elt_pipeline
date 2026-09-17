@@ -1,0 +1,86 @@
+title: Response Performance
+
+text: |
+  Company response effectiveness from `agg_complaints_by_month`,
+  `dim_companies`, and `dim_response_types`.
+
+queries:
+  monthly_timely:
+    sql: |
+      select
+        complaint_month_date,
+        pct_timely,
+        avg_days_to_response
+      from {{ ref('agg_complaints_by_month') }}
+      order by complaint_month_date
+
+  company_response:
+    sql: |
+      select
+        company,
+        total_complaints,
+        pct_timely,
+        pct_disputed,
+        avg_days_to_response
+      from {{ ref('dim_companies') }}
+      order by total_complaints desc
+      limit 20
+
+  response_types:
+    sql: |
+      select
+        company_response,
+        total_complaints,
+        pct_disputed,
+        pct_timely,
+        avg_days_to_response
+      from {{ ref('dim_response_types') }}
+      order by total_complaints desc
+
+charts:
+  timely_trend:
+    query: monthly_timely
+    type: line
+    title: Timely response rate over time
+    x: complaint_month_date
+    y: pct_timely
+    x_label: Month
+    y_label: Timely response %
+
+  response_time_scatter:
+    query: company_response
+    type: scatter
+    title: Volume vs response time
+    x: total_complaints
+    y: avg_days_to_response
+    color: pct_disputed
+    size: total_complaints
+    x_label: Total complaints
+    y_label: Avg days to response
+
+  company_response_table:
+    query: company_response
+    type: table
+    title: Company response quality
+
+  response_type_bar:
+    query: response_types
+    type: bar
+    title: Complaints by company response type
+    x: company_response
+    y: total_complaints
+    style:
+      orientation: horizontal
+
+  response_type_table:
+    query: response_types
+    type: table
+    title: Response type outcomes
+
+rows:
+  - timely_trend
+  - cols:
+      - response_time_scatter
+      - response_type_bar
+  - company_response_table
+  - response_type_table

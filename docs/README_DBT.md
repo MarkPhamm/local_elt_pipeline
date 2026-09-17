@@ -10,6 +10,14 @@ This project uses dbt (data build tool) to transform raw CFPB (Consumer Financia
 
 ```text
 duckdb_dbt/
+├── charts/               # dbt Charts boards over marts
+│   ├── meta.yml
+│   ├── overview.yml
+│   ├── executive.yml
+│   ├── geographic.yml
+│   ├── product.yml
+│   └── response.yml
+├── dbt_charts.yml
 ├── models/
 │   ├── staging/          # Light transformations from raw data
 │   │   └── cfpb/

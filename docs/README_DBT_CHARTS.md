@@ -2,6 +2,8 @@
 
 ## 1. Overview
 
+<img src="../images/dbt-charts.png" alt="dbt Charts" style="width:100%">
+
 [dbt Charts](https://docs.dbtcharts.com/) is a YAML language and CLI for declaring interactive dashboards next to dbt models. Boards live in Git, query DuckDB through the existing dbt profile, and render locally with no extra BI server.
 
 This project uses dbt Charts as the code-first BI layer over the CFPB marts.

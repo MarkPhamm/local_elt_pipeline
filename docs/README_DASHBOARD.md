@@ -1,6 +1,8 @@
-# CFPB Analytics Dashboard
+# CFPB Analytics Dashboard (Streamlit)
 
-**A high-performance interactive dashboard for exploring Consumer Financial Protection Bureau (CFPB) complaint data. This application runs locally to visualize trends, company performance, and product friction points.**
+The primary BI layer for this project is **[dbt Charts](README_DBT_CHARTS.md)** (`duckdb_dbt/charts/`, `uv run dct serve --project-dir duckdb_dbt`). This page documents the optional Streamlit app in `app/dashboard/`.
+
+**A local Streamlit dashboard for exploring Consumer Financial Protection Bureau (CFPB) complaint data: trends, company performance, and product friction points.**
 
 ---
 

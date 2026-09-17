@@ -1,6 +1,6 @@
 # Local Data Warehouse
 
-A local-first Data Wareouse pipeline that extracts CFPB consumer complaint data, transforms it with dbt into analytics-ready models, and serves interactive dashboards—all running on your laptop with zero cloud dependencies.
+A local-first data warehouse pipeline that extracts CFPB consumer complaint data, transforms it with dbt into analytics-ready models, and serves interactive dashboards—all running on your laptop with zero cloud dependencies.
 
 * **Package Manager**: [uv](https://docs.astral.sh/uv/) (Python)
 * **Ingestion**: [dlt](docs/README_DLT.md) + [PyArrow](docs/PYARROW.md) (API → Parquet staging → DuckDB)
@@ -10,7 +10,7 @@ A local-first Data Wareouse pipeline that extracts CFPB consumer complaint data,
 * **Orchestration**: [Prefect](docs/README_PREFECT.md)
 * **BI Tool**: [dbt Charts](docs/README_DBT_CHARTS.md)
 
-<img src="https://github.com/user-attachments/assets/1b4e8d7b-0527-4fdc-b104-562cf0c3efa6" alt="Architecture Diagram" style="width: 100%; height: auto;" />
+<img src="images/architecture.png" alt="Architecture diagram: CFPB to dltHub to DuckDB and dbt to dbt Charts. Prefect orchestrates the pipeline; GitHub Actions CI covers linting and dbt Charts validation." style="width: 100%; height: auto;" />
 
 ## 1. Quick Start
 

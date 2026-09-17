@@ -2021,7 +2021,7 @@ dev = [
 requires-dist = [
     { name = "catboost", specifier = ">=1.2.8" },
     { name = "category-encoders", specifier = ">=2.8.1" },
-    { name = "dbt-charts", specifier = ">=0.1.0" },
+    { name = "dbt-charts", specifier = ">=0.8.0" },
     { name = "dbt-colibri", specifier = ">=0.2.7" },
     { name = "dbt-duckdb", specifier = ">=1.7.0" },
     { name = "dlt", extras = ["duckdb"], specifier = ">=1.17.0" },

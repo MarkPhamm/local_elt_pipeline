@@ -9,5 +9,5 @@ text: |
   - [Product](/product/) — product mix, response time, and issue patterns
   - [Response](/response/) — timeliness, dispute rate, and response types
 
-  Queries read `{{ ref() }}` against the same DuckDB warehouse dbt builds.
+  Queries use dbt `ref()` against the same DuckDB warehouse dbt builds.
   Rebuild marts after a pipeline run, then refresh the board.
